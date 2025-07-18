@@ -1,0 +1,32 @@
+# Unity generated folders
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+UserSettings/
+
+# Visual Studio / JetBrains
+.vscode/
+.idea/
+*.csproj
+*.sln
+*.user
+*.pidb
+*.suo
+
+# OS 파일
+.DS_Store
+Thumbs.db
+
+# Crashlytics
+crashlytics-build.properties
+
+# Gradle
+.gradle/
+build/
+
+# Keystore (릴리즈 서명 파일)
+*.keystore
