@@ -3,28 +3,28 @@
   "WorkspaceRootPath": "E:\\Merge Fruit\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|e:\\merge fruit\\assets\\scripts\\outofbounds.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\outofbounds.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|e:\\merge fruit\\assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|E:\\Merge Fruit\\assets\\scripts\\spawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\spawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|E:\\Merge Fruit\\assets\\scripts\\mergemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mergemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|E:\\Merge Fruit\\assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|E:\\Merge Fruit\\assets\\scripts\\collisionrelay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\collisionrelay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|e:\\merge fruit\\assets\\scripts\\mergemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mergemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|E:\\Merge Fruit\\assets\\scripts\\fruit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\fruit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|E:\\Merge Fruit\\assets\\scripts\\outofbounds.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\outofbounds.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|E:\\Merge Fruit\\assets\\scripts\\collisionrelay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\collisionrelay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,11 +34,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "OutOfBounds.cs",
               "DocumentMoniker": "E:\\Merge Fruit\\Assets\\Scripts\\OutOfBounds.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\OutOfBounds.cs",
@@ -46,8 +46,7 @@
               "RelativeToolTip": "Assets\\Scripts\\OutOfBounds.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T10:31:07.791Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-21T10:31:07.791Z"
             },
             {
               "$type": "Document",
@@ -57,38 +56,40 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\GameManager.cs",
               "ToolTip": "E:\\Merge Fruit\\Assets\\Scripts\\GameManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\GameManager.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-21T10:30:43.917Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "Spawner.cs",
               "DocumentMoniker": "E:\\Merge Fruit\\Assets\\Scripts\\Spawner.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Spawner.cs",
               "ToolTip": "E:\\Merge Fruit\\Assets\\Scripts\\Spawner.cs",
               "RelativeToolTip": "Assets\\Scripts\\Spawner.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADQAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAADUAAAAAAAAAAAA4wGMAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T10:30:22.704Z"
+              "WhenOpened": "2025-08-21T10:30:22.704Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "MergeManager.cs",
               "DocumentMoniker": "E:\\Merge Fruit\\Assets\\Scripts\\MergeManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\MergeManager.cs",
               "ToolTip": "E:\\Merge Fruit\\Assets\\Scripts\\MergeManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\MergeManager.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAABdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T10:29:54.004Z"
+              "WhenOpened": "2025-08-21T10:29:54.004Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "CollisionRelay.cs",
               "DocumentMoniker": "E:\\Merge Fruit\\Assets\\Scripts\\CollisionRelay.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\CollisionRelay.cs",
@@ -100,13 +101,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 3,
               "Title": "Fruit.cs",
               "DocumentMoniker": "E:\\Merge Fruit\\Assets\\Scripts\\Fruit.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Fruit.cs",
               "ToolTip": "E:\\Merge Fruit\\Assets\\Scripts\\Fruit.cs",
               "RelativeToolTip": "Assets\\Scripts\\Fruit.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-21T10:28:42.204Z"
             }

@@ -499,7 +499,10 @@ MonoBehaviour:
   - {fileID: 49285706138521402, guid: 55d0b17331288e44e8482a1850c7398f, type: 3}
   - {fileID: 6163344745901472352, guid: e38b52c567bb4c64dbc4dd01848f521b, type: 3}
   horizontalLimit: 3
-  dropCooldown: 0.15
+  holdY: 6
+  disableColliderWhileHold: 1
+  dropCooldown: 0.4
+  spawnDelay: 0.4
 --- !u!4 &983181875
 Transform:
   m_ObjectHideFlags: 0
