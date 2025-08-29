@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6245463453190290310}
   - component: {fileID: 544796312547855965}
   m_Layer: 0
-  m_Name: Fruit_Grade0
+  m_Name: Fruit_Grade0 2
   m_TagString: Fruit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayerID: 1948972763
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c6289840ef24ac84f9f4b360a462f3dd, type: 3}
+  m_Sprite: {fileID: -6077338865104659199, guid: 089ffeb5247201140b364ef729d43ab7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -153,7 +153,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 4.55
+  m_Radius: 4.2
 --- !u!114 &6245463453190290310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 967df60c37c04fb4ea322857b102a690, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grade: 0
+  grade: 2
   scoreValue: 10
   rb: {fileID: 0}
   isMerging: 0

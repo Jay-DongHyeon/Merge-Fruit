@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 1337961015880994369}
   - component: {fileID: 3124702347698469641}
   - component: {fileID: 5678501834245067403}
-  - component: {fileID: 5542263868017579064}
   - component: {fileID: 6245463453190290310}
   - component: {fileID: 544796312547855965}
+  - component: {fileID: 1112430278969373715}
   m_Layer: 0
-  m_Name: Fruit_Grade0
+  m_Name: Fruit_Grade0 5
   m_TagString: Fruit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayerID: 1948972763
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c6289840ef24ac84f9f4b360a462f3dd, type: 3}
+  m_Sprite: {fileID: -2913145390756703829, guid: 9051349a58a25484dbfed81cbbee0470, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -118,8 +118,36 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!58 &5542263868017579064
-CircleCollider2D:
+--- !u!114 &6245463453190290310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9001198982692009566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 967df60c37c04fb4ea322857b102a690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grade: 5
+  scoreValue: 10
+  rb: {fileID: 0}
+  isMerging: 0
+--- !u!114 &544796312547855965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9001198982692009566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89ae12d65223fbd4aaf3bf6748c379eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!60 &1112430278969373715
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -153,32 +181,27 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 4.55
---- !u!114 &6245463453190290310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9001198982692009566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 967df60c37c04fb4ea322857b102a690, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  grade: 0
-  scoreValue: 10
-  rb: {fileID: 0}
-  isMerging: 0
---- !u!114 &544796312547855965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9001198982692009566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89ae12d65223fbd4aaf3bf6748c379eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 7.99, y: 9}
+    newSize: {x: 9, y: 9}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 3.8249998, y: -2.4099998}
+      - {x: 3.995, y: -2.07}
+      - {x: 3.995, y: 2.06}
+      - {x: 3.7749999, y: 2.46}
+      - {x: 0.195, y: 4.5}
+      - {x: -0.175, y: 4.5}
+      - {x: -3.725, y: 2.47}
+      - {x: -3.995, y: 2.03}
+      - {x: -3.995, y: -2.04}
+      - {x: -3.7649999, y: -2.44}
+      - {x: -0.145, y: -4.5}
+      - {x: 0.21499999, y: -4.5}
+  m_UseDelaunayMesh: 0

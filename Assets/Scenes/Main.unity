@@ -229,8 +229,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fruitPrefabs:
   - {fileID: 9001198982692009566, guid: 2202c80412d45b54899721e5ea3eff41, type: 3}
-  - {fileID: 49285706138521402, guid: 55d0b17331288e44e8482a1850c7398f, type: 3}
-  - {fileID: 6163344745901472352, guid: e38b52c567bb4c64dbc4dd01848f521b, type: 3}
+  - {fileID: 9001198982692009566, guid: 4f16bfa548cf6604aba3c420577aaf66, type: 3}
+  - {fileID: 9001198982692009566, guid: ee94a33d42dedfd45848621d429e4c98, type: 3}
+  - {fileID: 9001198982692009566, guid: 9e2c4d45f9422b64b90391d71fee70b0, type: 3}
+  - {fileID: 9001198982692009566, guid: 00073eacb5011124db7d09171301a7f6, type: 3}
+  - {fileID: 9001198982692009566, guid: 19f6cde539c565c49a45b3c2aa392ce8, type: 3}
+  - {fileID: 9001198982692009566, guid: 25796daa2da7ec34c80a34b7a78e17b5, type: 3}
+  - {fileID: 9001198982692009566, guid: 367a38c074f19ef43adaff41aa21ef45, type: 3}
+  - {fileID: 9001198982692009566, guid: d74bfbbb95a7e2c42b31a091455160b6, type: 3}
+  - {fileID: 9001198982692009566, guid: faeacc1a4a575734f9a728a8451d6a1f, type: 3}
+  - {fileID: 9001198982692009566, guid: 556632a973e7db44a88cf1bc53b51603, type: 3}
   mergeBonus: 10
 --- !u!114 &674646006
 MonoBehaviour:
@@ -496,13 +504,23 @@ MonoBehaviour:
   spawnPoint: {fileID: 1610280444}
   fruitPrefabs:
   - {fileID: 9001198982692009566, guid: 2202c80412d45b54899721e5ea3eff41, type: 3}
-  - {fileID: 49285706138521402, guid: 55d0b17331288e44e8482a1850c7398f, type: 3}
-  - {fileID: 6163344745901472352, guid: e38b52c567bb4c64dbc4dd01848f521b, type: 3}
+  - {fileID: 9001198982692009566, guid: 4f16bfa548cf6604aba3c420577aaf66, type: 3}
+  - {fileID: 9001198982692009566, guid: ee94a33d42dedfd45848621d429e4c98, type: 3}
+  - {fileID: 9001198982692009566, guid: 9e2c4d45f9422b64b90391d71fee70b0, type: 3}
+  - {fileID: 9001198982692009566, guid: 00073eacb5011124db7d09171301a7f6, type: 3}
+  - {fileID: 9001198982692009566, guid: 19f6cde539c565c49a45b3c2aa392ce8, type: 3}
+  - {fileID: 9001198982692009566, guid: 25796daa2da7ec34c80a34b7a78e17b5, type: 3}
+  - {fileID: 9001198982692009566, guid: 367a38c074f19ef43adaff41aa21ef45, type: 3}
+  - {fileID: 9001198982692009566, guid: d74bfbbb95a7e2c42b31a091455160b6, type: 3}
+  - {fileID: 9001198982692009566, guid: faeacc1a4a575734f9a728a8451d6a1f, type: 3}
+  - {fileID: 9001198982692009566, guid: 556632a973e7db44a88cf1bc53b51603, type: 3}
   horizontalLimit: 3.5
   holdY: 5
-  disableColliderWhileHold: 1
   dropCooldown: 0.4
   spawnDelay: 0.4
+  disableColliderWhileHold: 1
+  fruitTag: Fruit
+  debugLogs: 0
 --- !u!4 &983181875
 Transform:
   m_ObjectHideFlags: 0
@@ -825,8 +843,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -959161321
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 1a447552e7c4db845896e10b0a84d8a0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -885,6 +903,59 @@ Transform:
   m_Children: []
   m_Father: {fileID: 983181875}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1708397087
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1708397089}
+  - component: {fileID: 1708397088}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1708397088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708397087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42c92059be31819418b6a33eb19b6655, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgmClip: {fileID: 8300000, guid: 2a2ed7efb5d71114cbad2ef00a295df1, type: 3}
+  dropClip: {fileID: 8300000, guid: 7e9ee6dc04a5d40d1a5dfc4beb9865e7, type: 3}
+  mergeClip: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
+  bgmVolume: 0.12
+  sfxVolume: 0.8
+  dropPitchMin: 0.95
+  dropPitchMax: 1.05
+  mergePitchMin: 0.95
+  mergePitchMax: 1.05
+--- !u!4 &1708397089
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708397087}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -895,3 +966,4 @@ SceneRoots:
   - {fileID: 674646007}
   - {fileID: 1085467329}
   - {fileID: 1577879911}
+  - {fileID: 1708397089}
