@@ -3129,8 +3129,8 @@ MonoBehaviour:
   - {fileID: 9001198982692009566, guid: 556632a973e7db44a88cf1bc53b51603, type: 3}
   horizontalLimit: 3.5
   holdY: 5
-  dropCooldown: 0.4
-  spawnDelay: 0.4
+  dropCooldown: 0.6
+  spawnDelay: 0.6
   disableColliderWhileHold: 1
   fruitTag: Fruit
   debugLogs: 0
