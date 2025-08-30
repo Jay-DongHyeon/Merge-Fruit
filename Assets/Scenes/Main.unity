@@ -2620,7 +2620,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &843673224
 Transform:
   m_ObjectHideFlags: 0
@@ -5624,7 +5624,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1614262391
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6483,10 +6483,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 1.12
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 360, y: 640}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -6559,6 +6559,8 @@ MonoBehaviour:
   playingGroup: {fileID: 843673223}
   classicGroup: {fileID: 1666758371}
   timerGroup: {fileID: 2007293067}
+  pauseGroup: {fileID: 431599806}
+  settingTitleGroup: {fileID: 568221287}
   gameOverGroup: {fileID: 1801538385}
   startBTN: {fileID: 1553329122}
   settingBTN: {fileID: 1566813346}
@@ -6566,15 +6568,24 @@ MonoBehaviour:
   classicBTN: {fileID: 896725631}
   timeBTN: {fileID: 331067717}
   chooseBackBTN: {fileID: 900079518}
+  pauseBTN: {fileID: 0}
+  highScoreUI: {fileID: 299030365}
   classicScoreText: {fileID: 94663678}
   timerScoreText: {fileID: 1843494774}
   timeText: {fileID: 693530916}
   timeAttackSeconds: 60
+  pauseBgmSlider: {fileID: 0}
+  pauseSfxSlider: {fileID: 0}
+  pauseRestartBTN: {fileID: 0}
+  pauseHomeBTN: {fileID: 0}
+  pauseBackBTN: {fileID: 0}
   finalScoreText: {fileID: 1076344961}
-  restartBTN: {fileID: 340776458}
-  exitBTN_InGame: {fileID: 1624614616}
-  bgmSlider: {fileID: 0}
-  sfxSlider: {fileID: 0}
+  goRestartBTN: {fileID: 340776458}
+  goHomeBTN: {fileID: 1540024174}
+  goExitBTN: {fileID: 1624614616}
+  titleBgmSlider: {fileID: 0}
+  titleSfxSlider: {fileID: 0}
+  settingBackBTN: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
