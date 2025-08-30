@@ -88,7 +88,7 @@ public class Spawner : MonoBehaviour
         heldFruit.transform.position = pos;
 
         // 좌클릭(or 터치) + 쿨타임 체크 → 드롭
-        if (Input.GetMouseButtonDown(0) && Time.time - lastDropTime >= dropCooldown)
+        if (Input.GetMouseButtonUp(0) && Time.time - lastDropTime >= dropCooldown)
         {
             DropHeld();
             lastDropTime = Time.time;

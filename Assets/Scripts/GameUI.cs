@@ -90,7 +90,7 @@ public class GameUI : MonoBehaviour
         // Title
         if (startBTN) startBTN.onClick.AddListener(ShowChooseMode);
         if (settingBTN) settingBTN.onClick.AddListener(OpenTitleSetting);
-        if (exitBTN) exitBTN.onClick.AddListener(Application.Quit);
+        if (exitBTN) exitBTN.onClick.AddListener(Application.Quit); //게임 종료
 
         // Choose Mode
         if (classicBTN) classicBTN.onClick.AddListener(() => BeginGameplay(false));
@@ -113,13 +113,13 @@ public class GameUI : MonoBehaviour
         if (pauseSfxSlider)
         {
             pauseSfxSlider.onValueChanged.AddListener(v => AudioManager.Instance?.SetSfxVolume(v));
-            pauseSfxSlider.value = 0.8f;
+            pauseSfxSlider.value = 0.5f;
         }
 
         // Game Over Panel
         if (goRestartBTN) goRestartBTN.onClick.AddListener(RestartScene);
         if (goHomeBTN) goHomeBTN.onClick.AddListener(ShowTitle);
-        if (goExitBTN) goExitBTN.onClick.AddListener(Application.Quit);
+        if (goExitBTN) goExitBTN.onClick.AddListener(Application.Quit); //게임 종료
 
         // Title Setting Panel
         if (settingBackBTN) settingBackBTN.onClick.AddListener(CloseTitleSetting);
@@ -131,7 +131,7 @@ public class GameUI : MonoBehaviour
         if (titleSfxSlider)
         {
             titleSfxSlider.onValueChanged.AddListener(v => AudioManager.Instance?.SetSfxVolume(v));
-            titleSfxSlider.value = 0.8f;
+            titleSfxSlider.value = 0.5f;
         }
     }
 
@@ -148,7 +148,7 @@ public class GameUI : MonoBehaviour
         if (highScoreUI)
         {
             int hs = GetCurrentHighScore();
-            highScoreUI.text = $"Best : {hs}";
+            highScoreUI.text = hs.ToString();
         }
 
         // 타임어택 카운트다운
@@ -178,7 +178,7 @@ public class GameUI : MonoBehaviour
     void ShowChooseMode()
     {
         state = Flow.ChooseMode;
-        ToggleGroups(title: false, choose: true, playing: false, classic: false, timer: false, pause: false, settingTitle: false, over: false);
+        ToggleGroups(title: true, choose: true, playing: false, classic: false, timer: false, pause: false, settingTitle: false, over: false);
         SetSpawnersEnabled(false);
     }
 
@@ -204,10 +204,10 @@ public class GameUI : MonoBehaviour
 
     void OpenPause()
     {
-        if (state != Flow.PlayingClassic && state != Flow.PlayingTimer) return;
+        if (state != Flow.PlayingClassic) return;
         state = Flow.Paused;
 
-        ToggleGroups(title: false, choose: false, playing: true, classic: false, timer: false,
+        ToggleGroups(title: false, choose: false, playing: true, classic: true, timer: false,
                      pause: true, settingTitle: false, over: false);
 
         // 물리/드롭 입력 차단
@@ -236,8 +236,11 @@ public class GameUI : MonoBehaviour
 
     void OpenGameOverUI(int finalScore)
     {
+        bool wasTimer = (timerGroup != null && timerGroup.activeSelf);
+        state = wasTimer ? Flow.PlayingTimer : Flow.PlayingClassic;
+
         state = Flow.GameOver;
-        ToggleGroups(title: false, choose: false, playing: true, classic: false, timer: false, pause: false, settingTitle: false, over: true);
+        ToggleGroups(title: false, choose: false, playing: true, classic: !wasTimer, timer: wasTimer, pause: false, settingTitle: false, over: true);
         SetSpawnersEnabled(false);
 
         // 하이스코어 저장
@@ -254,7 +257,7 @@ public class GameUI : MonoBehaviour
 
     void OpenTitleSetting()
     {
-        ToggleGroups(title: false, choose: false, playing: false, classic: false, timer: false, pause: false, settingTitle: true, over: false);
+        ToggleGroups(title: true, choose: false, playing: false, classic: false, timer: false, pause: false, settingTitle: true, over: false);
     }
 
     void CloseTitleSetting()

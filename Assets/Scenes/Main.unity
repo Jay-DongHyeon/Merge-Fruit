@@ -2634,7 +2634,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1263946181}
   - {fileID: 1369135612}
   - {fileID: 377020931}
   - {fileID: 1666758372}
@@ -4302,12 +4301,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1263946180}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 843673224}
+  m_Father: {fileID: 1666758372}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5799,6 +5798,7 @@ Transform:
   m_Children:
   - {fileID: 94663677}
   - {fileID: 299030364}
+  - {fileID: 1263946181}
   m_Father: {fileID: 843673224}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1708397087
@@ -5833,8 +5833,8 @@ MonoBehaviour:
   bgmClip: {fileID: 8300000, guid: 2a2ed7efb5d71114cbad2ef00a295df1, type: 3}
   dropClip: {fileID: 8300000, guid: 7e9ee6dc04a5d40d1a5dfc4beb9865e7, type: 3}
   mergeClip: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
-  bgmVolume: 0.12
-  sfxVolume: 0.8
+  bgmVolume: 0.5
+  sfxVolume: 0.5
 --- !u!4 &1708397089
 Transform:
   m_ObjectHideFlags: 0
@@ -6568,24 +6568,24 @@ MonoBehaviour:
   classicBTN: {fileID: 896725631}
   timeBTN: {fileID: 331067717}
   chooseBackBTN: {fileID: 900079518}
-  pauseBTN: {fileID: 0}
+  pauseBTN: {fileID: 1263946182}
   highScoreUI: {fileID: 299030365}
   classicScoreText: {fileID: 94663678}
   timerScoreText: {fileID: 1843494774}
   timeText: {fileID: 693530916}
   timeAttackSeconds: 60
-  pauseBgmSlider: {fileID: 0}
-  pauseSfxSlider: {fileID: 0}
-  pauseRestartBTN: {fileID: 0}
-  pauseHomeBTN: {fileID: 0}
-  pauseBackBTN: {fileID: 0}
+  pauseBgmSlider: {fileID: 452087918}
+  pauseSfxSlider: {fileID: 1456101551}
+  pauseRestartBTN: {fileID: 1113024593}
+  pauseHomeBTN: {fileID: 1201354422}
+  pauseBackBTN: {fileID: 838828717}
   finalScoreText: {fileID: 1076344961}
   goRestartBTN: {fileID: 340776458}
   goHomeBTN: {fileID: 1540024174}
   goExitBTN: {fileID: 1624614616}
-  titleBgmSlider: {fileID: 0}
-  titleSfxSlider: {fileID: 0}
-  settingBackBTN: {fileID: 0}
+  titleBgmSlider: {fileID: 286530469}
+  titleSfxSlider: {fileID: 341030956}
+  settingBackBTN: {fileID: 1374747523}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

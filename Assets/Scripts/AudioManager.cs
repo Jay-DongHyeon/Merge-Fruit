@@ -12,7 +12,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("Volumes")]
     [SerializeField, Range(0f, 1f)] private float bgmVolume = 0.5f;
-    [SerializeField, Range(0f, 1f)] private float sfxVolume = 0.8f;
+    [SerializeField, Range(0f, 1f)] private float sfxVolume = 0.5f;
 
     private AudioSource bgmSource;
     private AudioSource sfxSource;
