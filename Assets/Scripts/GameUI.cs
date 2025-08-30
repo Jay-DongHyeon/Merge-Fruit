@@ -102,7 +102,7 @@ public class GameUI : MonoBehaviour
 
         // Pause Panel
         if (pauseRestartBTN) pauseRestartBTN.onClick.AddListener(RestartScene);
-        if (pauseHomeBTN) pauseHomeBTN.onClick.AddListener(ShowTitleFromPause);
+        if (pauseHomeBTN) pauseHomeBTN.onClick.AddListener(GoHomeScene);
         if (pauseBackBTN) pauseBackBTN.onClick.AddListener(ClosePause);
 
         if (pauseBgmSlider)
@@ -118,7 +118,7 @@ public class GameUI : MonoBehaviour
 
         // Game Over Panel
         if (goRestartBTN) goRestartBTN.onClick.AddListener(RestartScene);
-        if (goHomeBTN) goHomeBTN.onClick.AddListener(ShowTitle);
+        if (goHomeBTN) goHomeBTN.onClick.AddListener(GoHomeScene);
         if (goExitBTN) goExitBTN.onClick.AddListener(Application.Quit); //게임 종료
 
         // Title Setting Panel
@@ -132,6 +132,16 @@ public class GameUI : MonoBehaviour
         {
             titleSfxSlider.onValueChanged.AddListener(v => AudioManager.Instance?.SetSfxVolume(v));
             titleSfxSlider.value = 0.5f;
+        }
+
+        if (RestartHelper.ModeIsTimer.HasValue)
+        {
+            BeginGameplay(RestartHelper.ModeIsTimer.Value);
+            RestartHelper.ModeIsTimer = null; // 초기화
+        }
+        else
+        {
+            ShowTitle();
         }
     }
 
@@ -228,11 +238,6 @@ public class GameUI : MonoBehaviour
         Time.timeScale = 1f;
     }
 
-    void ShowTitleFromPause()
-    {
-        Time.timeScale = 1f;
-        ShowTitle();
-    }
 
     void OpenGameOverUI(int finalScore)
     {
@@ -250,6 +255,16 @@ public class GameUI : MonoBehaviour
     }
 
     void RestartScene()
+    {
+        // 현재 모드 기록
+        bool wasTimer = (timerGroup != null && timerGroup.activeSelf);
+
+        // 씬 다시 로드
+        RestartHelper.ModeIsTimer = wasTimer;   //로드 후에도 모드 유지
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+    }
+    void GoHomeScene()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
