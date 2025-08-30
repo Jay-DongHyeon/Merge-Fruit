@@ -6446,13 +6446,14 @@ GameObject:
   - component: {fileID: 2102944759}
   - component: {fileID: 2102944758}
   - component: {fileID: 2102944757}
+  - component: {fileID: 2102944761}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2102944757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6541,6 +6542,39 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &2102944761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2102944756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec2743386f8956479f1974560f94c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  titleGroup: {fileID: 1614262390}
+  chooseModeGroup: {fileID: 118915586}
+  playingGroup: {fileID: 843673223}
+  timerUIGroup: {fileID: 2007293067}
+  gameOverGroup: {fileID: 1801538385}
+  startBTN: {fileID: 1553329122}
+  settingBTN: {fileID: 1566813346}
+  exitBTN: {fileID: 626346419}
+  classicBTN: {fileID: 896725631}
+  timeBTN: {fileID: 331067717}
+  chooseBackBTN: {fileID: 900079518}
+  scoreText: {fileID: 0}
+  pauseBTN: {fileID: 1263946182}
+  homeBTN: {fileID: 0}
+  timeText: {fileID: 0}
+  timeAttackSeconds: 60
+  finalScoreText: {fileID: 1076344961}
+  restartBTN: {fileID: 340776458}
+  exitBTN_InGame: {fileID: 1624614616}
+  bgmSlider: {fileID: 0}
+  sfxSlider: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
