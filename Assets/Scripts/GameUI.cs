@@ -5,50 +5,50 @@ using TMPro;
 
 public class GameUI : MonoBehaviour
 {
-    // ====== Panels / Groups ======
+    // ===== Screens / Groups =====
     [Header("Screens")]
-    [SerializeField] private GameObject titleGroup;      // Canvas/Title
-    [SerializeField] private GameObject chooseModeGroup; // Canvas/ChooseMode
-    [SerializeField] private GameObject playingGroup;    // Canvas/Playing (점수/일시정지 버튼 등)
-    [SerializeField] private GameObject timerUIGroup;    // Canvas/TimerMode (남은 시간 표시)
-    [SerializeField] private GameObject gameOverGroup;   // Canvas/GameOver or Canvas/Pause-Playing
+    [SerializeField] private GameObject titleGroup;       // Canvas/Title
+    [SerializeField] private GameObject chooseModeGroup;  // Canvas/ChooseMode
+    [SerializeField] private GameObject playingGroup;     // Canvas/Playing (공통 HUD)
+    [SerializeField] private GameObject classicGroup;     // Canvas/ClassicMode (클래식용 점수 UI 묶음)
+    [SerializeField] private GameObject timerGroup;       // Canvas/TimerMode  (타이머용 점수/타이머 UI 묶음)
+    [SerializeField] private GameObject gameOverGroup;    // Canvas/GameOver (또는 Pause-Playing의 패널)
 
-    // ====== Title ======
+    // ===== Title =====
     [Header("Title")]
-    [SerializeField] private Button startBTN;   // StartBTN
+    [SerializeField] private Button startBTN;
     [SerializeField] private Button settingBTN; // 선택
     [SerializeField] private Button exitBTN;    // 선택
 
-    // ====== Choose Mode ======
+    // ===== Choose Mode =====
     [Header("Choose Mode")]
-    [SerializeField] private Button classicBTN; // ClassicBTN
-    [SerializeField] private Button timeBTN;    // TimerBTN
-    [SerializeField] private Button chooseBackBTN; // BackBTN (제목으로 복귀)
+    [SerializeField] private Button classicBTN;
+    [SerializeField] private Button timeBTN;
+    [SerializeField] private Button chooseBackBTN;
 
-    // ====== In-Game (Common) ======
-    [Header("In-Game UI")]
-    [SerializeField] private TextMeshProUGUI scoreText; // Playing/ScoreUI (또는 ClassicMode/Score_Classic)
-    [SerializeField] private Button pauseBTN;           // 선택
-    [SerializeField] private Button homeBTN;            // 선택 (홈으로)
+    // ===== Score UI (분리된 2세트) =====
+    [Header("Score UI (Separated)")]
+    [SerializeField] private TextMeshProUGUI classicScoreText; // ClassicMode/Score_Classic
+    [SerializeField] private TextMeshProUGUI timerScoreText;   // TimerMode/Score_Timer
 
-    // ====== Timer Mode ======
+    // ===== Timer Mode =====
     [Header("Time Attack")]
-    [SerializeField] private TextMeshProUGUI timeText;  // TimerMode/TimerUI
+    [SerializeField] private TextMeshProUGUI timeText; // TimerMode/TimerUI
     [SerializeField] private float timeAttackSeconds = 60f;
 
-    // ====== Game Over ======
+    // ===== Game Over =====
     [Header("Game Over")]
     [SerializeField] private TextMeshProUGUI finalScoreText; // GameOver/Score_Final
-    [SerializeField] private Button restartBTN;               // RestartBTN
-    [SerializeField] private Button exitBTN_InGame;           // ExitBTN(게임오버 패널 안)
+    [SerializeField] private Button restartBTN;              // RestartBTN
+    [SerializeField] private Button exitBTN_InGame;          // ExitBTN (게임오버 패널 안)
 
-    // ====== Audio (선택) ======
+    // ===== Audio (옵션) =====
     [Header("Audio (Optional)")]
     [SerializeField] private Slider bgmSlider;
     [SerializeField] private Slider sfxSlider;
 
-    // ====== State ======
-    private enum Flow { Title, ChooseMode, Playing_Classic, Playing_Timer, GameOver }
+    // ===== State =====
+    private enum Flow { Title, ChooseMode, PlayingClassic, PlayingTimer, GameOver }
     private Flow state = Flow.Title;
     private float timerRemain;
     private Spawner[] spawners;
@@ -56,32 +56,28 @@ public class GameUI : MonoBehaviour
     void Awake()
     {
         spawners = FindObjectsByType<Spawner>(FindObjectsSortMode.None);
-        SetSpawnersEnabled(false); // 타이틀에서는 입력/드롭 비활성
-        Time.timeScale = 1f;       // 혹시 0으로 남아있을 대비
+        SetSpawnersEnabled(false);  // 타이틀에서 비활성
+        Time.timeScale = 1f;
     }
 
     void Start()
     {
-        // 초기 화면
         ShowTitle();
 
-        // Title buttons
-        if (startBTN) startBTN.onClick.AddListener(() => ShowChooseMode());
+        // Title
+        if (startBTN) startBTN.onClick.AddListener(ShowChooseMode);
         if (exitBTN) exitBTN.onClick.AddListener(Application.Quit);
 
-        // ChooseMode buttons
+        // Choose
         if (classicBTN) classicBTN.onClick.AddListener(() => BeginGameplay(false));
         if (timeBTN) timeBTN.onClick.AddListener(() => BeginGameplay(true));
         if (chooseBackBTN) chooseBackBTN.onClick.AddListener(ShowTitle);
-
-        // In-game common
-        if (homeBTN) homeBTN.onClick.AddListener(ShowTitle);
 
         // GameOver
         if (restartBTN) restartBTN.onClick.AddListener(RestartScene);
         if (exitBTN_InGame) exitBTN_InGame.onClick.AddListener(Application.Quit);
 
-        // Audio sliders
+        // Audio sliders (옵션)
         if (bgmSlider)
         {
             bgmSlider.value = 0.5f;
@@ -96,36 +92,34 @@ public class GameUI : MonoBehaviour
 
     void Update()
     {
-        // 점수 표기
-        if (scoreText && GameManager.Instance != null)
-            scoreText.text = GameManager.Instance.GetScore().ToString();
+        if (GameManager.Instance == null) return;
+
+        // 분리된 점수 UI 갱신
+        int score = GameManager.Instance.GetScore();
+        if (state == Flow.PlayingClassic && classicScoreText) classicScoreText.text = score.ToString();
+        if (state == Flow.PlayingTimer && timerScoreText) timerScoreText.text = score.ToString();
 
         // 타임어택 카운트다운
-        if (state == Flow.Playing_Timer && GameManager.Instance != null && !GameManager.Instance.IsGameOver)
+        if (state == Flow.PlayingTimer && !GameManager.Instance.IsGameOver)
         {
             timerRemain -= Time.deltaTime;
             if (timerRemain < 0f) timerRemain = 0f;
-
             if (timeText) timeText.text = Mathf.CeilToInt(timerRemain).ToString();
 
             if (timerRemain <= 0f)
-            {
-                GameManager.Instance.GameOver(); // 타임업 → 게임오버
-            }
+                GameManager.Instance.GameOver(); // 타임업
         }
 
         // 게임오버 패널 오픈
-        if (GameManager.Instance != null && GameManager.Instance.IsGameOver && state != Flow.GameOver)
-        {
+        if (GameManager.Instance.IsGameOver && state != Flow.GameOver)
             OpenGameOverUI();
-        }
     }
 
-    // ====== Flow helpers ======
+    // ===== Flow =====
     void ShowTitle()
     {
         state = Flow.Title;
-        ToggleGroups(title: true, choose: false, playing: false, timerUI: false, over: false);
+        ToggleGroups(title: true, choose: false, playing: false, classic: false, timer: false, over: false);
         SetSpawnersEnabled(false);
         Time.timeScale = 1f;
     }
@@ -133,31 +127,34 @@ public class GameUI : MonoBehaviour
     void ShowChooseMode()
     {
         state = Flow.ChooseMode;
-        ToggleGroups(title: false, choose: true, playing: false, timerUI: false, over: false);
+        ToggleGroups(title: false, choose: true, playing: false, classic: false, timer: false, over: false);
         SetSpawnersEnabled(false);
     }
 
     void BeginGameplay(bool timerMode)
     {
-        state = timerMode ? Flow.Playing_Timer : Flow.Playing_Classic;
-        ToggleGroups(title: false, choose: false, playing: true, timerUI: timerMode, over: false);
-        SetSpawnersEnabled(true);
-
-        // 타임어택 설정
         if (timerMode)
         {
+            state = Flow.PlayingTimer;
             timerRemain = timeAttackSeconds;
             if (timeText) timeText.text = Mathf.CeilToInt(timerRemain).ToString();
         }
+        else
+        {
+            state = Flow.PlayingClassic;
+        }
 
-        // 웹/모바일 첫 클릭 이후 BGM 보장
+        ToggleGroups(title: false, choose: false, playing: true,
+                     classic: !timerMode, timer: timerMode, over: false);
+
+        SetSpawnersEnabled(true);
         AudioManager.Instance?.EnsureBgmPlaying();
     }
 
     void OpenGameOverUI()
     {
         state = Flow.GameOver;
-        ToggleGroups(title: false, choose: false, playing: true, timerUI: false, over: true);
+        ToggleGroups(title: false, choose: false, playing: true, classic: false, timer: false, over: true);
         SetSpawnersEnabled(false);
 
         if (finalScoreText && GameManager.Instance != null)
@@ -170,13 +167,14 @@ public class GameUI : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    // ====== Utilities ======
-    void ToggleGroups(bool title, bool choose, bool playing, bool timerUI, bool over)
+    // ===== Utils =====
+    void ToggleGroups(bool title, bool choose, bool playing, bool classic, bool timer, bool over)
     {
         if (titleGroup) titleGroup.SetActive(title);
         if (chooseModeGroup) chooseModeGroup.SetActive(choose);
         if (playingGroup) playingGroup.SetActive(playing);
-        if (timerUIGroup) timerUIGroup.SetActive(timerUI);
+        if (classicGroup) classicGroup.SetActive(classic);
+        if (timerGroup) timerGroup.SetActive(timer);
         if (gameOverGroup) gameOverGroup.SetActive(over);
     }
 

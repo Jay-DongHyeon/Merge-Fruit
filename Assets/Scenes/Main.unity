@@ -1030,7 +1030,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 9999999
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3358,7 +3358,7 @@ Transform:
   m_GameObject: {fileID: 1067767320}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -6.9, z: 0}
+  m_LocalPosition: {x: 0, y: -6.98, z: 0}
   m_LocalScale: {x: 1.2, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6557,7 +6557,8 @@ MonoBehaviour:
   titleGroup: {fileID: 1614262390}
   chooseModeGroup: {fileID: 118915586}
   playingGroup: {fileID: 843673223}
-  timerUIGroup: {fileID: 2007293067}
+  classicGroup: {fileID: 1666758371}
+  timerGroup: {fileID: 2007293067}
   gameOverGroup: {fileID: 1801538385}
   startBTN: {fileID: 1553329122}
   settingBTN: {fileID: 1566813346}
@@ -6565,9 +6566,8 @@ MonoBehaviour:
   classicBTN: {fileID: 896725631}
   timeBTN: {fileID: 331067717}
   chooseBackBTN: {fileID: 900079518}
-  scoreText: {fileID: 1843494774}
-  pauseBTN: {fileID: 1263946182}
-  homeBTN: {fileID: 0}
+  classicScoreText: {fileID: 94663678}
+  timerScoreText: {fileID: 1843494774}
   timeText: {fileID: 693530916}
   timeAttackSeconds: 60
   finalScoreText: {fileID: 1076344961}
