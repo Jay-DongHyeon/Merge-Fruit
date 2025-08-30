@@ -1,18 +1,22 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    public bool IsGameOver { get; private set; }
 
-    [Header("Score")]
+    // ìƒíƒœ
+    public bool IsGameOver { get; private set; }
+    private bool waitingFreezeClick = false; // í´ë¦­ í›„ ì •ì§€ ëª¨ë“œì¼ ë•Œ true
+
+    [Header("Score UI (ì„ íƒ)")]
     [SerializeField] private TextMeshProUGUI scoreText;
 
+    // ì ìˆ˜
     private int score;
 
-    // nÀº 1~11´Ü°è »ç¿ë. [0]Àº ¹Ì»ç¿ë
+    // nì€ 1~11ë‹¨ê³„ ì‚¬ìš©. [0]ì€ ë¯¸ì‚¬ìš© â€” ìµœì´ˆ ìƒì„± ë³´ë„ˆìŠ¤ ì²´í¬
     private bool[] firstCreatedStage = new bool[12];
 
     void Awake()
@@ -20,26 +24,24 @@ public class GameManager : MonoBehaviour
         if (Instance == null) Instance = this;
         else { Destroy(gameObject); return; }
 
-        // »õ °ÔÀÓ ½ÃÀÛ »óÅÂ ÃÊ±âÈ­
         ResetScoreState();
-        Time.timeScale = 1f; // È¤½Ã ¸ğ¸¦ ÀÜ¿© Å¸ÀÓ½ºÄÉÀÏ º¹±¸
+        Time.timeScale = 1f;
         IsGameOver = false;
     }
 
-    // === Á¡¼ö API ===
+    // === ì ìˆ˜ API ===
     public void AddScore(int v)
     {
         if (IsGameOver) return;
         score += v;
         UpdateScoreUI();
-        Debug.Log($"Score: {score}");
     }
 
     public int GetScore() => score;
 
     /// <summary>
-    /// º´ÇÕÀ¸·Î n´Ü°è(1~11)°¡ »õ·Î ¸¸µé¾îÁú ¶§ È£ÃâÇØ "¾ó¸¶¸¦ ´õÇÒÁö" °è»ê.
-    /// ±âº»: 3*(n-1) + (ÀÌ¹ø °ÔÀÓ¿¡¼­ ÃÖÃÊ »ı¼º ´Ü°è¶ó¸é 3^n º¸³Ê½º)
+    /// ë³‘í•©ìœ¼ë¡œ në‹¨ê³„(1~11)ê°€ ìƒˆë¡œ ë§Œë“¤ì–´ì§ˆ ë•Œ í˜¸ì¶œí•´ "ì–¼ë§ˆë¥¼ ë”í• ì§€" ê³„ì‚°.
+    /// ê¸°ë³¸: 3*(n-1) + (ì´ë²ˆ ê²Œì„ì—ì„œ ìµœì´ˆ ìƒì„± ë‹¨ê³„ë¼ë©´ 3^n ë³´ë„ˆìŠ¤)
     /// </summary>
     public int ComputeMergeScoreForStageN(int n)
     {
@@ -50,7 +52,7 @@ public class GameManager : MonoBehaviour
 
         if (!firstCreatedStage[n])
         {
-            bonus = Pow3(n);          // ÃÖÃÊ µîÀå º¸³Ê½º
+            bonus = Pow3(n);          // ìµœì´ˆ ë“±ì¥ ë³´ë„ˆìŠ¤
             firstCreatedStage[n] = true;
         }
 
@@ -77,26 +79,45 @@ public class GameManager : MonoBehaviour
         UpdateScoreUI();
     }
 
-    // === °ÔÀÓ ¿À¹ö ===
-    public void GameOver()
+    // === ê²Œì„ ì˜¤ë²„ ===
+    /// <summary>
+    /// waitForClick = true  â†’ ì¦‰ì‹œ ê²Œì„ì˜¤ë²„ ìƒíƒœë¡œ ì „í™˜í•˜ë˜ "í´ë¦­ ì‹œ" Time.timeScale=0
+    /// waitForClick = false â†’ ì¦‰ì‹œ Time.timeScale=0 (ì¦‰ì‹œ ì¢…ë£Œ)
+    /// </summary>
+    public void GameOver(bool waitForClick = false)
     {
         if (IsGameOver) return;
         IsGameOver = true;
 
-        // 1) »ç¿îµå Áï½Ã Á¤Áö
+        // 1) ì‚¬ìš´ë“œ ì¦‰ì‹œ ì •ì§€
         AudioManager.Instance?.StopBgm();
 
-        // 2) °ÔÀÓÇÃ·¹ÀÌ Áï½Ã ÇÏµå-½ºÅé (¹°¸®/ÀÔ·Â ¸ğµÎ Â÷´Ü)
+        // 2) ê²Œì„í”Œë ˆì´ ì¦‰ì‹œ í•˜ë“œ-ìŠ¤í†± (ë¬¼ë¦¬/ì…ë ¥ ëª¨ë‘ ì°¨ë‹¨)
         StopGameplayImmediately();
 
-        // 3) Å¸ÀÓ½ºÄÉÀÏ 0 (ÄÚ·çÆ¾/¾Ö´Ï¸Ş µî ÀÏ¹İ Èå¸§µµ Á¤Áö)
-        Time.timeScale = 0f;
+        // 3) íƒ€ì„ìŠ¤ì¼€ì¼ ì²˜ë¦¬
+        waitingFreezeClick = waitForClick;
+        if (!waitingFreezeClick)
+        {
+            Time.timeScale = 0f; // â˜… ì¦‰ì‹œ ì¢…ë£Œ
+        }
 
-        Debug.Log("GAME OVER - Press R to Restart");
+        Debug.Log(waitForClick ? "GAME OVER - Click to freeze" : "GAME OVER - Frozen immediately");
     }
 
     void Update()
     {
+        // í´ë¦­ ëŒ€ê¸° ëª¨ë“œ: í´ë¦­í•˜ë©´ ê·¸ ì‹œì ì— TimeScale=0
+        if (IsGameOver && waitingFreezeClick)
+        {
+            if (Input.GetMouseButtonDown(0) || Input.touchCount > 0)
+            {
+                Time.timeScale = 0f;
+                waitingFreezeClick = false;
+            }
+        }
+
+        // Rë¡œ ë¦¬ìŠ¤íƒ€íŠ¸(ì„ì‹œ)
         if (IsGameOver && Input.GetKeyDown(KeyCode.R))
         {
             Time.timeScale = 1f;
@@ -105,17 +126,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // === Áï½Ã Á¤Áö ·çÆ¾ ===
+    // === ì¦‰ì‹œ ì •ì§€ ë£¨í‹´ ===
     void StopGameplayImmediately()
     {
-        // ½ºÆ÷³Ê ºñÈ°¼ºÈ­ ¡æ ÀÔ·Â/µå·Ó ¿ÏÀü Â÷´Ü
+        // ìŠ¤í¬ë„ˆ ë¹„í™œì„±í™” â†’ ì…ë ¥/ë“œë¡­ ì™„ì „ ì°¨ë‹¨
         var spawners = FindObjectsByType<Spawner>(FindObjectsSortMode.None);
         for (int i = 0; i < spawners.Length; i++)
             spawners[i].enabled = false;
 
-        // ¸ğµç 2D ¸®Áöµå¹Ùµğ ¹°¸® Á¤Áö
+        // ëª¨ë“  2D ë¦¬ì§€ë“œë°”ë”” ë¬¼ë¦¬ ì •ì§€
         var rbs = FindObjectsByType<Rigidbody2D>(FindObjectsSortMode.None);
         for (int i = 0; i < rbs.Length; i++)
-            rbs[i].simulated = false; // ¹°¸® Áï½Ã OFF
+            rbs[i].simulated = false; // ë¬¼ë¦¬ ì¦‰ì‹œ OFF
     }
 }

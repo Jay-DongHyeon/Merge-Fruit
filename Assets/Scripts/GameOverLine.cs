@@ -10,11 +10,11 @@ public class GameOverLine : MonoBehaviour
     [SerializeField] private float contactThreshold = 5f; // 5초 연속 접촉 시 게임오버
 
     [Header("Visual")]
-    [SerializeField] private SpriteRenderer barBg;   // 라인 배경(선택)
-    [SerializeField] private SpriteRenderer barFill; // 진행 게이지(선택)
+    [SerializeField] private SpriteRenderer barBg;   // 진행 표시 배경(선택)
+    [SerializeField] private SpriteRenderer barFill; // 진행 표시(선택)
     [SerializeField] private Color safeColor = new Color(0.2f, 0.9f, 0.3f, 0.85f);
     [SerializeField] private Color warnColor = new Color(0.95f, 0.15f, 0.15f, 0.95f);
-    [SerializeField, Range(0f, 1f)] private float pulseStart = 0.8f; // 경고 펄스 시작 지점(=80%)
+    [SerializeField, Range(0f, 1f)] private float pulseStart = 0.8f; // 80%부터 펄스
     [SerializeField] private float pulseSpeed = 6f; // 펄스 속도
 
     // 접촉 시작 시각 기록
@@ -30,7 +30,6 @@ public class GameOverLine : MonoBehaviour
     {
         var col = GetComponent<Collider2D>();
         col.isTrigger = true;
-        // barFill이 있으면 시작 시 비움
         if (barFill) SetFill(0f);
         SetColor(0f);
     }
@@ -58,7 +57,8 @@ public class GameOverLine : MonoBehaviour
         if (elapsed >= contactThreshold)
         {
             contactStart.Clear();
-            GameManager.Instance?.GameOver();
+            // ★ 즉시 종료 (클릭 필요 없음)
+            GameManager.Instance?.GameOver(false);
         }
     }
 
@@ -92,11 +92,11 @@ public class GameOverLine : MonoBehaviour
     {
         if (!barFill) return;
 
-        // 기본적으로는 0..1 사이 비율
+        // 기본 비율
         float baseX = Mathf.Max(0.0001f, t);
 
-        // 게이지가 100% 가까워질수록 최대 1.15까지 확대
-        float extraScale = Mathf.Lerp(1f, 1.15f, t); // t=0일 땐 1, t=1일 땐 1.15
+        // 1.0에 가까울수록 최대 1.15배 확대 (요구사항)
+        float extraScale = Mathf.Lerp(1f, 1.15f, t);
         float scaledX = baseX * extraScale;
 
         var s = barFill.transform.localScale;
@@ -104,10 +104,8 @@ public class GameOverLine : MonoBehaviour
         barFill.transform.localScale = s;
     }
 
-
     void SetColor(float t)
     {
-        // 색상은 안전→경고로 보간 + 막바지에는 펄스 효과
         var col = Color.Lerp(safeColor, warnColor, t);
         if (t >= pulseStart)
         {
@@ -125,11 +123,11 @@ public class GameOverLine : MonoBehaviour
         if (col == null) return false;
         if (!col.CompareTag(fruitTag)) return false;
         var rb = col.attachedRigidbody;
-        return rb != null && rb.bodyType == RigidbodyType2D.Dynamic; // 들고있는 미리보기(Kinematic) 제외
+        return rb != null && rb.bodyType == RigidbodyType2D.Dynamic; // 들고있는/미리보기(Kinematic) 제외
     }
 }
 
-// 가비지 줄이기용 간단 캐시 (없어도 동작)
+// 간단 리스트 캐시 (가비지 줄이기)
 static class ListCache<T>
 {
     static readonly System.Collections.Generic.Stack<System.Collections.Generic.List<T>> pool = new();

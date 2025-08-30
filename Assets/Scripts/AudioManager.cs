@@ -37,28 +37,30 @@ public class AudioManager : MonoBehaviour
         sfxSource.spatialBlend = 0f;
     }
 
+    // --- BGM ---
+    public void PlayBgm() => EnsureBgmPlaying();   // ★ 다른 스크립트 호환용
     public void EnsureBgmPlaying()
     {
         if (bgmSource != null && bgmSource.clip != null && !bgmSource.isPlaying)
             bgmSource.Play();
     }
-
-    public void StopBgm()  // ★ 게임오버 시 호출
+    public void StopBgm()
     {
         if (bgmSource != null && bgmSource.isPlaying)
             bgmSource.Stop();
     }
 
+    // --- SFX ---
     public void PlayDrop()
     {
-        if (dropClip == null) return;
+        if (dropClip == null || sfxSource == null) return;
         sfxSource.pitch = 1f;
         sfxSource.PlayOneShot(dropClip, sfxVolume);
     }
 
     public void PlayMerge()
     {
-        if (mergeClip == null) return;
+        if (mergeClip == null || sfxSource == null) return;
         sfxSource.pitch = 1f;
         sfxSource.PlayOneShot(mergeClip, sfxVolume);
     }
