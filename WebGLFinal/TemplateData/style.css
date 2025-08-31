@@ -1,0 +1,49 @@
+/* 기본 리셋 */
+html, body { padding: 0; margin: 0; height: 100%; background: #000; }
+
+#unity-container {
+  position: fixed;
+  left: 0; top: 0;
+  width: 100svw;
+  height: 100svh;
+  margin: 0; padding: 0;
+  background: #000;
+
+  /* iOS notch / 홈바 안전영역 */
+  padding-top:    env(safe-area-inset-top);
+  padding-right:  env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left:   env(safe-area-inset-left);
+}
+
+/* 데스크톱 중앙 정렬 */
+#unity-container.unity-desktop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 모바일 클래스는 표시/숨김 등에만 사용 */
+#unity-container.unity-mobile { }
+
+/* 캔버스: 실제 크기는 JS에서 설정(contain), 여기선 안전한 상한만 지정 */
+#unity-canvas {
+  background: #231F20;
+  display: block;
+  margin: 0 auto;
+  aspect-ratio: 360 / 640; /* 정보용: 원본 비율 */
+  max-width:  min(100svw, 100svh * (360/640));
+  max-height: min(100svh, 100svw * (640/360));
+}
+
+/* 로딩/푸터 UI */
+#unity-loading-bar { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: none }
+#unity-logo { width: 154px; height: 130px; background: url('unity-logo-dark.png') no-repeat center }
+#unity-progress-bar-empty { width: 141px; height: 18px; margin-top: 10px; margin-left: 6.5px; background: url('progress-bar-empty-dark.png') no-repeat center }
+#unity-progress-bar-full { width: 0%; height: 18px; margin-top: 10px; background: url('progress-bar-full-dark.png') no-repeat center }
+#unity-footer { position: relative }
+.unity-mobile #unity-footer { display: none }
+#unity-logo-title-footer { float:left; width: 102px; height: 38px; background: url('unity-logo-title-footer.png') no-repeat center }
+#unity-build-title { float: right; margin-right: 10px; line-height: 38px; font-family: arial; font-size: 18px }
+#unity-fullscreen-button { cursor:pointer; float: right; width: 38px; height: 38px; background: url('fullscreen-button.png') no-repeat center }
+#unity-warning { position: absolute; left: 50%; top: 5%; transform: translate(-50%); background: white; padding: 10px; display: none }

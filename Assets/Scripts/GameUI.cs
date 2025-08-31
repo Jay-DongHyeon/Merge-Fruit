@@ -288,6 +288,13 @@ public class GameUI : MonoBehaviour
     void RestartScene()
     {
         bool wasTimer = currentIsTimer;
+
+        // ★ 지금 프레임에서 드롭 방지
+        SuppressPointerOnAllSpawners();
+
+        // ★ 새 씬 시작 후 손을 뗄 때까지도 한 번 더 억제
+        RestartHelper.SuppressPointerOnStart = true;
+
         GameManager.Instance?.ResetTimescaleIfPaused();
         RestartHelper.ModeIsTimer = wasTimer;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);

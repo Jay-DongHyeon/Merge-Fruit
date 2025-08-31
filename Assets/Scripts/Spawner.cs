@@ -88,6 +88,20 @@ public class Spawner : MonoBehaviour
         cam = Camera.main;
         if (spawnPoint == null) spawnPoint = transform;
 
+        // ★ (1) 씬 재시작 직후, 손에서 뗄 때까지 억제
+        if (RestartHelper.SuppressPointerOnStart)
+        {
+            suppressUntilRelease = true;
+            RestartHelper.SuppressPointerOnStart = false; // 일회성
+        }
+
+        // ★ (2) 씬이 시작될 때 이미 포인터가 눌려 있으면 손 뗄 때까지 억제
+#if UNITY_EDITOR || UNITY_STANDALONE
+        if (Input.GetMouseButton(0)) suppressUntilRelease = true;
+#else
+        if (Input.touchCount > 0) suppressUntilRelease = true;
+#endif
+
         EnsurePreviewObjects();
 
         // 시작 시: 현재/다음 2개를 연속으로 뽑아둠
@@ -294,9 +308,9 @@ public class Spawner : MonoBehaviour
         }
 
         // 정렬/스케일/투명도 세팅
-        previewSR.sortingLayerName = previewSortingLayer;
-        previewSR.sortingOrder = previewSortingOrder;
-        previewSR.transform.localScale = Vector3.one * previewScale;
+        previewSR.sortingLayerName = "UI";
+        previewSR.sortingOrder = 1000;
+        previewSR.transform.localScale = Vector3.one * 0.35f;
         previewSR.transform.localPosition = previewLocalOffset;
 
         var c = previewSR.color; c.a = Mathf.Clamp01(previewAlpha); previewSR.color = c;
