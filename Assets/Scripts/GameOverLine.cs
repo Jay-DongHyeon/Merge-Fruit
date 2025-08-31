@@ -41,8 +41,8 @@ public class GameOverLine : MonoBehaviour
         if (GameManager.Instance != null && GameManager.Instance.IsGameOver) return;
         if (!IsValidFruit(other)) return;
 
-        if (!contactStartUnscaled.ContainsKey(other))
-            contactStartUnscaled[other] = Time.unscaledTime; // 언스케일드로 기록
+        if (!contactStartUnscaled.ContainsKey(other))//
+            contactStartUnscaled[other] = Time.time; // 타임 스케일에 영향 받음
         if (debugLogs) Debug.Log($"[OverLine] Enter {other.name}");
     }
 
@@ -76,7 +76,7 @@ public class GameOverLine : MonoBehaviour
 
         // 현재 닿아있는 과일들 중 "최대 경과 시간(언스케일드)"
         float maxElapsed = 0f;
-        float now = Time.unscaledTime;
+        float now = Time.time;
         foreach (var kv in contactStartUnscaled)
         {
             float elapsed = now - kv.Value;
@@ -119,7 +119,7 @@ public class GameOverLine : MonoBehaviour
         var col = Color.Lerp(safeColor, warnColor, t);
         if (t >= pulseStart)
         {
-            float p = (Mathf.Sin(Time.unscaledTime * pulseSpeed) * 0.5f + 0.5f); // 언스케일드로 펄스
+            float p = (Mathf.Sin(Time.time * pulseSpeed) * 0.5f + 0.5f); // 언스케일드로 펄스
             float extra = Mathf.Lerp(0f, 0.25f, (t - pulseStart) / Mathf.Max(0.0001f, 1f - pulseStart));
             col.a = Mathf.Clamp01(col.a * (1f - extra * p)); // 알파 펄스
         }
