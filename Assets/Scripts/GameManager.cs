@@ -95,8 +95,9 @@ public class GameManager : MonoBehaviour
         if (IsGameOver) return;
         IsGameOver = true;
 
-        // 1) 사운드 즉시 정지
+        // 1) 사운드 즉시 정지 & 게임오버 효과음
         AudioManager.Instance?.StopBgm();
+        AudioManager.Instance?.PlayGameOver();
 
         // 2) 게임플레이 즉시 하드-스톱 (물리/입력 모두 차단)
         StopGameplayImmediately();
@@ -138,12 +139,12 @@ public class GameManager : MonoBehaviour
         }
 
         // R로 리스타트(임시)
-        if (IsGameOver && Input.GetKeyDown(KeyCode.R))
-        {
-            Time.timeScale = 1f;
-            IsGameOver = false;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
+        //if (IsGameOver && Input.GetKeyDown(KeyCode.R))
+        //{
+        //    Time.timeScale = 1f;
+        //    IsGameOver = false;
+        //    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //}
     }
 
     // === 즉시 정지 루틴 ===
@@ -158,5 +159,11 @@ public class GameManager : MonoBehaviour
         var rbs = FindObjectsByType<Rigidbody2D>(FindObjectsSortMode.None);
         for (int i = 0; i < rbs.Length; i++)
             rbs[i].simulated = false; // 물리 즉시 OFF
+    }
+
+    //버튼 클릭 효과음(버튼 컴포넌트에 직접 연결)
+    public void click_SE()
+    {
+        AudioManager.Instance?.PlayClick();
     }
 }

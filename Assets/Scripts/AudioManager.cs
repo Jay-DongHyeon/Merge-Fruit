@@ -9,6 +9,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip bgmClip;
     [SerializeField] private AudioClip dropClip;
     [SerializeField] private AudioClip mergeClip;
+    [SerializeField] private AudioClip btnClickClip;
+    [SerializeField] private AudioClip GameOverClip;
 
     [Header("Volumes")]
     [SerializeField, Range(0f, 1f)] private float bgmVolume = 0.5f;
@@ -72,6 +74,20 @@ public class AudioManager : MonoBehaviour
         if (mergeClip == null || sfxSource == null) return;
         sfxSource.pitch = 1f;
         sfxSource.PlayOneShot(mergeClip, sfxVolume);
+    }
+
+    public void PlayClick()
+    {
+        if(btnClickClip== null || sfxSource == null) return;
+        sfxSource.pitch = 1f;
+        sfxSource.PlayOneShot(btnClickClip, sfxVolume);
+    }
+    public void PlayGameOver()
+    {
+        if (GameOverClip == null || sfxSource == null) return;
+        Debug.Log("게임오버효과음");
+        sfxSource.pitch = 1f;
+        sfxSource.PlayOneShot(GameOverClip, sfxVolume);
     }
 
     // --- Volume Controls ---
