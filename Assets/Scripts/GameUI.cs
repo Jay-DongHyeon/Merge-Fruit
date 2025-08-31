@@ -93,7 +93,7 @@ public class GameUI : MonoBehaviour
         // Title
         if (startBTN) startBTN.onClick.AddListener(ShowChooseMode);
         if (settingBTN) settingBTN.onClick.AddListener(OpenTitleSetting);
-        if (exitBTN) exitBTN.onClick.AddListener(Application.Quit);
+        if (exitBTN) exitBTN.onClick.AddListener(exitGame);
 
         // Choose Mode
         if (classicBTN) classicBTN.onClick.AddListener(() => BeginGameplay(false));
@@ -122,7 +122,7 @@ public class GameUI : MonoBehaviour
         // Game Over Panel
         if (goRestartBTN) goRestartBTN.onClick.AddListener(RestartScene);
         if (goHomeBTN) goHomeBTN.onClick.AddListener(GoHomeScene);
-        if (goExitBTN) goExitBTN.onClick.AddListener(Application.Quit);
+        if (goExitBTN) goExitBTN.onClick.AddListener(exitGame);
 
         // Title Setting Panel
         if (settingBackBTN) settingBackBTN.onClick.AddListener(CloseTitleSetting);
@@ -371,5 +371,15 @@ public class GameUI : MonoBehaviour
         PlayerPrefs.Save();
         RefreshHighTexts();
         Debug.Log(">>> High Scores cleared (Classic + Timer)");
+    }
+
+    /// 게임종료. 전처리기를 이용해 에디터 아닐때 종료.
+    public void exitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }
