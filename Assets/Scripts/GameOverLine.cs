@@ -7,7 +7,9 @@ public class GameOverLine : MonoBehaviour
 {
     [Header("Rule")]
     [SerializeField] private string fruitTag = "Fruit";
-    [SerializeField] private float contactThreshold = 5f; // 5초 연속 접촉 시 게임오버
+    [SerializeField] private float contactThreshold = 5f;    // 연속 접촉 시간(초)
+    [SerializeField] private bool requireDynamicBody = true; // true면 RigidbodyType2D.Dynamic만 허용
+    [SerializeField] private bool debugLogs = false;
 
     [Header("Visual")]
     [SerializeField] private SpriteRenderer barBg;   // 진행 표시 배경(선택)
@@ -17,8 +19,8 @@ public class GameOverLine : MonoBehaviour
     [SerializeField, Range(0f, 1f)] private float pulseStart = 0.8f; // 80%부터 펄스
     [SerializeField] private float pulseSpeed = 6f; // 펄스 속도
 
-    // 접촉 시작 시각 기록
-    private readonly Dictionary<Collider2D, float> contactStart = new();
+    // 접촉 시작 시각(언스케일드 타임) 기록
+    private readonly Dictionary<Collider2D, float> contactStartUnscaled = new();
 
     void Reset()
     {
@@ -36,55 +38,63 @@ public class GameOverLine : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (GameManager.Instance != null && GameManager.Instance.IsGameOver) return;
         if (!IsValidFruit(other)) return;
-        if (!contactStart.ContainsKey(other))
-            contactStart[other] = Time.time;
+
+        if (!contactStartUnscaled.ContainsKey(other))
+            contactStartUnscaled[other] = Time.unscaledTime; // 언스케일드로 기록
+        if (debugLogs) Debug.Log($"[OverLine] Enter {other.name}");
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (contactStart.ContainsKey(other))
-            contactStart.Remove(other);
-    }
-
-    void OnTriggerStay2D(Collider2D other)
-    {
-        if (!IsValidFruit(other)) return;
-        if (!contactStart.ContainsKey(other))
-            contactStart[other] = Time.time;
-
-        float elapsed = Time.time - contactStart[other];
-        if (elapsed >= contactThreshold)
+        if (contactStartUnscaled.ContainsKey(other))
         {
-            contactStart.Clear();
-            // ★ 즉시 종료 (클릭 필요 없음)
-            GameManager.Instance?.GameOver(false);
+            contactStartUnscaled.Remove(other);
+            if (debugLogs) Debug.Log($"[OverLine] Exit {other.name}");
         }
     }
 
     void Update()
     {
-        // 죽은/비활성 콜라이더 정리
-        if (contactStart.Count > 0)
+        // 게임오버면 추가 연산 중지
+        if (GameManager.Instance != null && GameManager.Instance.IsGameOver) return;
+
+        // 죽은/비활성 콜라이더 정리 + 유효성 재검증
+        if (contactStartUnscaled.Count > 0)
         {
             var dead = ListCache<Collider2D>.Get();
-            foreach (var kv in contactStart)
+            foreach (var kv in contactStartUnscaled)
             {
-                if (kv.Key == null || !kv.Key.gameObject.activeInHierarchy)
-                    dead.Add(kv.Key);
+                var c = kv.Key;
+                if (c == null || !c.gameObject.activeInHierarchy || !IsValidFruit(c))
+                    dead.Add(c);
             }
-            foreach (var k in dead) contactStart.Remove(k);
+            foreach (var d in dead) contactStartUnscaled.Remove(d);
             ListCache<Collider2D>.Release(dead);
         }
 
-        // 진행도 계산: 현재 라인에 닿아있는 과일 중 "최대 경과 시간" 기준
+        // 현재 닿아있는 과일들 중 "최대 경과 시간(언스케일드)"
         float maxElapsed = 0f;
-        foreach (var kv in contactStart)
-            maxElapsed = Mathf.Max(maxElapsed, Time.time - kv.Value);
+        float now = Time.unscaledTime;
+        foreach (var kv in contactStartUnscaled)
+        {
+            float elapsed = now - kv.Value;
+            if (elapsed > maxElapsed) maxElapsed = elapsed;
+        }
 
+        // 시각 피드백
         float t = Mathf.Clamp01(maxElapsed / contactThreshold); // 0..1
         SetFill(t);
         SetColor(t);
+
+        // 임계치 도달 시 즉시 종료
+        if (maxElapsed >= contactThreshold && contactStartUnscaled.Count > 0)
+        {
+            if (debugLogs) Debug.Log($"[OverLine] Threshold reached ({maxElapsed:F2}s) → GameOverImmediate");
+            contactStartUnscaled.Clear();          // 중복 호출 방지
+            GameManager.Instance?.GameOverImmediate();
+        }
     }
 
     // --- Visual helpers ---
@@ -95,7 +105,7 @@ public class GameOverLine : MonoBehaviour
         // 기본 비율
         float baseX = Mathf.Max(0.0001f, t);
 
-        // 1.0에 가까울수록 최대 1.15배 확대 (요구사항)
+        // 1.0에 가까울수록 최대 1.15배 확대
         float extraScale = Mathf.Lerp(1f, 1.15f, t);
         float scaledX = baseX * extraScale;
 
@@ -109,7 +119,7 @@ public class GameOverLine : MonoBehaviour
         var col = Color.Lerp(safeColor, warnColor, t);
         if (t >= pulseStart)
         {
-            float p = (Mathf.Sin(Time.time * pulseSpeed) * 0.5f + 0.5f); // 0..1
+            float p = (Mathf.Sin(Time.unscaledTime * pulseSpeed) * 0.5f + 0.5f); // 언스케일드로 펄스
             float extra = Mathf.Lerp(0f, 0.25f, (t - pulseStart) / Mathf.Max(0.0001f, 1f - pulseStart));
             col.a = Mathf.Clamp01(col.a * (1f - extra * p)); // 알파 펄스
         }
@@ -122,8 +132,20 @@ public class GameOverLine : MonoBehaviour
     {
         if (col == null) return false;
         if (!col.CompareTag(fruitTag)) return false;
+
         var rb = col.attachedRigidbody;
-        return rb != null && rb.bodyType == RigidbodyType2D.Dynamic; // 들고있는/미리보기(Kinematic) 제외
+        if (rb == null) return false;
+
+        // 들고있는 상태(Kinematic) 제외하고 싶다면 requireDynamicBody를 true로 유지
+        if (requireDynamicBody && rb.bodyType != RigidbodyType2D.Dynamic) return false;
+
+        // 물리가 비활성(simulated=false)이면 제외
+        if (!rb.simulated) return false;
+
+        // Collider가 꺼져있으면 제외
+        if (!col.enabled) return false;
+
+        return true;
     }
 }
 

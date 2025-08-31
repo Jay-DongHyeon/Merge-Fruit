@@ -4922,6 +4922,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fruitTag: Fruit
   contactThreshold: 5
+  requireDynamicBody: 1
+  debugLogs: 0
   barBg: {fileID: 1048868642}
   barFill: {fileID: 993883741}
   safeColor: {r: 0.2, g: 0.9, b: 0.3, a: 0.85}
@@ -6643,7 +6645,8 @@ MonoBehaviour:
   timeBTN: {fileID: 331067717}
   chooseBackBTN: {fileID: 900079518}
   pauseBTN: {fileID: 1263946182}
-  highScoreUI: {fileID: 299030365}
+  classicHighText: {fileID: 299030365}
+  timerHighText: {fileID: 335547483}
   classicScoreText: {fileID: 94663678}
   timerScoreText: {fileID: 1843494774}
   timeText: {fileID: 693530916}

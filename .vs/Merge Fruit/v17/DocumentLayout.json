@@ -3,12 +3,20 @@
   "WorkspaceRootPath": "E:\\Merge Fruit\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|E:\\Merge Fruit\\assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|E:\\Merge Fruit\\assets\\scripts\\gameui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gameui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|E:\\Merge Fruit\\assets\\scripts\\gameoverline.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gameoverline.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|e:\\merge fruit\\assets\\scripts\\restarthelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\restarthelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|e:\\merge fruit\\assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|E:\\Merge Fruit\\assets\\scripts\\audiomanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -21,10 +29,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|E:\\Merge Fruit\\assets\\scripts\\mergemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mergemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|e:\\merge fruit\\assets\\scripts\\gameui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gameui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8B3B99C2-201B-04B7-D010-0FF016D73BB4}|Assembly-CSharp.csproj|E:\\Merge Fruit\\assets\\scripts\\fruit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -46,24 +50,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
+              "Title": "RestartHelper.cs",
+              "DocumentMoniker": "E:\\Merge Fruit\\Assets\\Scripts\\RestartHelper.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\RestartHelper.cs",
+              "ToolTip": "E:\\Merge Fruit\\Assets\\Scripts\\RestartHelper.cs",
+              "RelativeToolTip": "Assets\\Scripts\\RestartHelper.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-31T01:41:57.612Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "GameUI.cs",
               "DocumentMoniker": "E:\\Merge Fruit\\Assets\\Scripts\\GameUI.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\GameUI.cs",
               "ToolTip": "E:\\Merge Fruit\\Assets\\Scripts\\GameUI.cs",
               "RelativeToolTip": "Assets\\Scripts\\GameUI.cs",
-              "ViewState": "AgIAAPcAAAAAAAAAAAAswDgBAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACkBAAAAAAAAAAAkwGQBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-30T14:34:58.186Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "NextPreview.cs",
               "DocumentMoniker": "E:\\Merge Fruit\\Assets\\Scripts\\NextPreview.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\NextPreview.cs",
@@ -81,40 +98,40 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\GameOverLine.cs",
               "ToolTip": "E:\\Merge Fruit\\Assets\\Scripts\\GameOverLine.cs",
               "RelativeToolTip": "Assets\\Scripts\\GameOverLine.cs",
-              "ViewState": "AgIAAE0AAAAAAAAAAAAkwIgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAGMAAAAAAAAAAAAkwJ4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-30T11:09:22.39Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "AudioManager.cs",
               "DocumentMoniker": "E:\\Merge Fruit\\Assets\\Scripts\\AudioManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\AudioManager.cs",
               "ToolTip": "E:\\Merge Fruit\\Assets\\Scripts\\AudioManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\AudioManager.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAA5wE4AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACcAAAAAAAAAAAAkwGIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-29T12:19:29.398Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "GameManager.cs",
               "DocumentMoniker": "E:\\Merge Fruit\\Assets\\Scripts\\GameManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\GameManager.cs",
               "ToolTip": "E:\\Merge Fruit\\Assets\\Scripts\\GameManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\GameManager.cs",
-              "ViewState": "AgIAAFYAAAAAAAAAAAAcwI4AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAGsAAAAAAAAAAAAYwKIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-21T10:30:43.917Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "Spawner.cs",
               "DocumentMoniker": "E:\\Merge Fruit\\Assets\\Scripts\\Spawner.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Spawner.cs",
@@ -122,12 +139,11 @@
               "RelativeToolTip": "Assets\\Scripts\\Spawner.cs",
               "ViewState": "AgIAAOUAAAAAAAAAAAAswCYBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T10:30:22.704Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-21T10:30:22.704Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "MergeManager.cs",
               "DocumentMoniker": "E:\\Merge Fruit\\Assets\\Scripts\\MergeManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\MergeManager.cs",
@@ -135,12 +151,11 @@
               "RelativeToolTip": "Assets\\Scripts\\MergeManager.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T10:29:54.004Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-21T10:29:54.004Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "CollisionRelay.cs",
               "DocumentMoniker": "E:\\Merge Fruit\\Assets\\Scripts\\CollisionRelay.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\CollisionRelay.cs",
@@ -148,12 +163,11 @@
               "RelativeToolTip": "Assets\\Scripts\\CollisionRelay.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T10:29:24.512Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-21T10:29:24.512Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "Fruit.cs",
               "DocumentMoniker": "E:\\Merge Fruit\\Assets\\Scripts\\Fruit.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Fruit.cs",
@@ -161,8 +175,7 @@
               "RelativeToolTip": "Assets\\Scripts\\Fruit.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T10:28:42.204Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-21T10:28:42.204Z"
             }
           ]
         }

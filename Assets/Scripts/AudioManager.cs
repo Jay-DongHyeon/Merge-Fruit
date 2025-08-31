@@ -17,12 +17,20 @@ public class AudioManager : MonoBehaviour
     private AudioSource bgmSource;
     private AudioSource sfxSource;
 
+    private const string KEY_BGM = "VOL_BGM";
+    private const string KEY_SFX = "VOL_SFX";
+
     void Awake()
     {
         if (Instance != null) { Destroy(gameObject); return; }
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
+        // --- 저장된 볼륨 불러오기 ---
+        bgmVolume = PlayerPrefs.GetFloat(KEY_BGM, bgmVolume);
+        sfxVolume = PlayerPrefs.GetFloat(KEY_SFX, sfxVolume);
+
+        // --- BGM Source ---
         bgmSource = gameObject.AddComponent<AudioSource>();
         bgmSource.clip = bgmClip;
         bgmSource.loop = true;
@@ -30,6 +38,7 @@ public class AudioManager : MonoBehaviour
         bgmSource.playOnAwake = false;
         bgmSource.spatialBlend = 0f;
 
+        // --- SFX Source ---
         sfxSource = gameObject.AddComponent<AudioSource>();
         sfxSource.loop = false;
         sfxSource.volume = sfxVolume;
@@ -38,7 +47,7 @@ public class AudioManager : MonoBehaviour
     }
 
     // --- BGM ---
-    public void PlayBgm() => EnsureBgmPlaying();   // ★ 다른 스크립트 호환용
+    public void PlayBgm() => EnsureBgmPlaying();   // 다른 스크립트 호환용
     public void EnsureBgmPlaying()
     {
         if (bgmSource != null && bgmSource.clip != null && !bgmSource.isPlaying)
@@ -65,14 +74,25 @@ public class AudioManager : MonoBehaviour
         sfxSource.PlayOneShot(mergeClip, sfxVolume);
     }
 
+    // --- Volume Controls ---
     public void SetBgmVolume(float v)
     {
         bgmVolume = Mathf.Clamp01(v);
         if (bgmSource) bgmSource.volume = bgmVolume;
+
+        PlayerPrefs.SetFloat(KEY_BGM, bgmVolume);
+        PlayerPrefs.Save();
     }
 
     public void SetSfxVolume(float v)
     {
         sfxVolume = Mathf.Clamp01(v);
+        if (sfxSource) sfxSource.volume = sfxVolume;
+
+        PlayerPrefs.SetFloat(KEY_SFX, sfxVolume);
+        PlayerPrefs.Save();
     }
+
+    public float GetBgmVolume() => bgmVolume;
+    public float GetSfxVolume() => sfxVolume;
 }

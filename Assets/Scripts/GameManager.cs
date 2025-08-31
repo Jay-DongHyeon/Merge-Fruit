@@ -29,6 +29,12 @@ public class GameManager : MonoBehaviour
         IsGameOver = false;
     }
 
+    void Start()
+    {
+        // 씬 시작 시 BGM이 멈춰있다면 재생 보장 (WebGL/모바일 첫 입력 이후 등 케이스 대응)
+        AudioManager.Instance?.EnsureBgmPlaying();
+    }
+
     // === 점수 API ===
     public void AddScore(int v)
     {
@@ -105,6 +111,20 @@ public class GameManager : MonoBehaviour
         Debug.Log(waitForClick ? "GAME OVER - Click to freeze" : "GAME OVER - Frozen immediately");
     }
 
+    /// <summary>
+    /// 다른 스크립트에서 "무조건 즉시 종료"를 명확하게 호출하고 싶을 때 사용.
+    /// (GameOver(false)와 동일)
+    /// </summary>
+    public void GameOverImmediate() => GameOver(false);
+
+    /// <summary>
+    /// 씬 재시작/홈 이동 전에 호출해서 타임스케일이 0으로 남는 이슈 방지
+    /// </summary>
+    public void ResetTimescaleIfPaused()
+    {
+        if (Time.timeScale == 0f) Time.timeScale = 1f;
+    }
+
     void Update()
     {
         // 클릭 대기 모드: 클릭하면 그 시점에 TimeScale=0
@@ -132,7 +152,7 @@ public class GameManager : MonoBehaviour
         // 스포너 비활성화 → 입력/드롭 완전 차단
         var spawners = FindObjectsByType<Spawner>(FindObjectsSortMode.None);
         for (int i = 0; i < spawners.Length; i++)
-            spawners[i].enabled = false;
+            if (spawners[i]) spawners[i].enabled = false;
 
         // 모든 2D 리지드바디 물리 정지
         var rbs = FindObjectsByType<Rigidbody2D>(FindObjectsSortMode.None);

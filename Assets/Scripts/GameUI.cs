@@ -1,3 +1,4 @@
+// Scripts/GameUI.cs
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -5,33 +6,35 @@ using TMPro;
 
 public class GameUI : MonoBehaviour
 {
-    // ===== Screens / Groups (Hierarchy에 있는 패널들 연결) =====
+    // ===== Screens / Groups =====
     [Header("Screens")]
-    [SerializeField] private GameObject titleGroup;        // Canvas/Title
-    [SerializeField] private GameObject chooseModeGroup;   // Canvas/ChooseMode
-    [SerializeField] private GameObject playingGroup;      // Canvas/Playing (공통 HUD)
-    [SerializeField] private GameObject classicGroup;      // Canvas/ClassicMode (클래식 점수 UI)
-    [SerializeField] private GameObject timerGroup;        // Canvas/TimerMode  (타이머/점수 UI)
-    [SerializeField] private GameObject pauseGroup;        // Canvas/Pause-Playing/Panel
-    [SerializeField] private GameObject settingTitleGroup; // Canvas/Setting-Title/Panel
-    [SerializeField] private GameObject gameOverGroup;     // Canvas/GameOver/Panel
+    [SerializeField] private GameObject titleGroup;
+    [SerializeField] private GameObject chooseModeGroup;
+    [SerializeField] private GameObject playingGroup;      // 공통 HUD
+    [SerializeField] private GameObject classicGroup;      // ClassicMode
+    [SerializeField] private GameObject timerGroup;        // TimerMode
+    [SerializeField] private GameObject pauseGroup;        // Pause-Playing/Panel
+    [SerializeField] private GameObject settingTitleGroup; // Setting-Title/Panel
+    [SerializeField] private GameObject gameOverGroup;     // GameOver/Panel
 
     // ===== Title =====
     [Header("Title")]
-    [SerializeField] private Button startBTN;     // Title/StartBTN
-    [SerializeField] private Button settingBTN;   // Title/SettingBTN
-    [SerializeField] private Button exitBTN;      // Title/ExitBTN
+    [SerializeField] private Button startBTN;
+    [SerializeField] private Button settingBTN;
+    [SerializeField] private Button exitBTN;
 
     // ===== Choose Mode =====
     [Header("Choose Mode")]
-    [SerializeField] private Button classicBTN;   // ChooseMode/ClassicBTN
-    [SerializeField] private Button timeBTN;      // ChooseMode/TimerBTN
-    [SerializeField] private Button chooseBackBTN;// ChooseMode/BackBTN
+    [SerializeField] private Button classicBTN;
+    [SerializeField] private Button timeBTN;
+    [SerializeField] private Button chooseBackBTN;
 
     // ===== In-Game (HUD) =====
     [Header("Playing HUD")]
-    [SerializeField] private Button pauseBTN;             // Playing/PauseBTN
-    [SerializeField] private TextMeshProUGUI highScoreUI; // Playing/HighUI (하이스코어 표시)
+    [SerializeField] private Button pauseBTN;
+    // 모드별 하이스코어 텍스트(캔버스 구조에 맞춰 분리)
+    [SerializeField] private TextMeshProUGUI classicHighText; // ClassicMode/High_Classic
+    [SerializeField] private TextMeshProUGUI timerHighText;   // TimerMode/High_Timer
 
     // ===== Score UI (모드별 분리) =====
     [Header("Score UI (Separated)")]
@@ -45,24 +48,24 @@ public class GameUI : MonoBehaviour
 
     // ===== Pause Panel =====
     [Header("Pause UI")]
-    [SerializeField] private Slider pauseBgmSlider;        // Pause-Playing/Slider_BGM
-    [SerializeField] private Slider pauseSfxSlider;        // Pause-Playing/Slider_SE
-    [SerializeField] private Button pauseRestartBTN;       // Pause-Playing/RestartBTN
-    [SerializeField] private Button pauseHomeBTN;          // Pause-Playing/HomeBTN
-    [SerializeField] private Button pauseBackBTN;          // Pause-Playing/BackBTN (닫기)
+    [SerializeField] private Slider pauseBgmSlider;
+    [SerializeField] private Slider pauseSfxSlider;
+    [SerializeField] private Button pauseRestartBTN;
+    [SerializeField] private Button pauseHomeBTN;
+    [SerializeField] private Button pauseBackBTN;
 
     // ===== Game Over Panel =====
     [Header("Game Over")]
-    [SerializeField] private TextMeshProUGUI finalScoreText; // GameOver/Score_Final
-    [SerializeField] private Button goRestartBTN;            // GameOver/RestartBTN
-    [SerializeField] private Button goHomeBTN;               // GameOver/HomeBTN
-    [SerializeField] private Button goExitBTN;               // GameOver/ExitBTN
+    [SerializeField] private TextMeshProUGUI finalScoreText;
+    [SerializeField] private Button goRestartBTN;
+    [SerializeField] private Button goHomeBTN;
+    [SerializeField] private Button goExitBTN;
 
     // ===== Title Setting Panel =====
     [Header("Title Setting")]
-    [SerializeField] private Slider titleBgmSlider;        // Setting-Title/Slider_BGM
-    [SerializeField] private Slider titleSfxSlider;        // Setting-Title/Slider_SE
-    [SerializeField] private Button settingBackBTN;        // Setting-Title/BackBTN
+    [SerializeField] private Slider titleBgmSlider;
+    [SerializeField] private Slider titleSfxSlider;
+    [SerializeField] private Button settingBackBTN;
 
     // ===== State =====
     private enum Flow { Title, ChooseMode, PlayingClassic, PlayingTimer, Paused, GameOver }
@@ -70,8 +73,9 @@ public class GameUI : MonoBehaviour
 
     private float timerRemain;
     private Spawner[] spawners;
+    private bool currentIsTimer = false; // 이번 라운드 모드
 
-    // PlayerPrefs 키 (모드별 하이스코어 저장)
+    // PlayerPrefs 키
     const string HS_CLASSIC = "HighScore_Classic";
     const string HS_TIMER = "HighScore_Timer";
 
@@ -90,7 +94,7 @@ public class GameUI : MonoBehaviour
         // Title
         if (startBTN) startBTN.onClick.AddListener(ShowChooseMode);
         if (settingBTN) settingBTN.onClick.AddListener(OpenTitleSetting);
-        if (exitBTN) exitBTN.onClick.AddListener(Application.Quit); //게임 종료
+        if (exitBTN) exitBTN.onClick.AddListener(Application.Quit);
 
         // Choose Mode
         if (classicBTN) classicBTN.onClick.AddListener(() => BeginGameplay(false));
@@ -108,58 +112,63 @@ public class GameUI : MonoBehaviour
         if (pauseBgmSlider)
         {
             pauseBgmSlider.onValueChanged.AddListener(v => AudioManager.Instance?.SetBgmVolume(v));
-            pauseBgmSlider.value = 0.5f;
+            pauseBgmSlider.value = AudioManager.Instance ? AudioManager.Instance.GetBgmVolume() : 0.5f;
         }
         if (pauseSfxSlider)
         {
             pauseSfxSlider.onValueChanged.AddListener(v => AudioManager.Instance?.SetSfxVolume(v));
-            pauseSfxSlider.value = 0.5f;
+            pauseSfxSlider.value = AudioManager.Instance ? AudioManager.Instance.GetSfxVolume() : 0.5f;
         }
 
         // Game Over Panel
         if (goRestartBTN) goRestartBTN.onClick.AddListener(RestartScene);
         if (goHomeBTN) goHomeBTN.onClick.AddListener(GoHomeScene);
-        if (goExitBTN) goExitBTN.onClick.AddListener(Application.Quit); //게임 종료
+        if (goExitBTN) goExitBTN.onClick.AddListener(Application.Quit);
 
         // Title Setting Panel
         if (settingBackBTN) settingBackBTN.onClick.AddListener(CloseTitleSetting);
         if (titleBgmSlider)
         {
             titleBgmSlider.onValueChanged.AddListener(v => AudioManager.Instance?.SetBgmVolume(v));
-            titleBgmSlider.value = 0.5f;
+            titleBgmSlider.value = AudioManager.Instance ? AudioManager.Instance.GetBgmVolume() : 0.5f;
         }
         if (titleSfxSlider)
         {
             titleSfxSlider.onValueChanged.AddListener(v => AudioManager.Instance?.SetSfxVolume(v));
-            titleSfxSlider.value = 0.5f;
+            titleSfxSlider.value = AudioManager.Instance ? AudioManager.Instance.GetSfxVolume() : 0.5f;
         }
 
+        // 리스타트로 진입 시 모드 유지
         if (RestartHelper.ModeIsTimer.HasValue)
         {
             BeginGameplay(RestartHelper.ModeIsTimer.Value);
-            RestartHelper.ModeIsTimer = null; // 초기화
+            RestartHelper.ModeIsTimer = null;
         }
         else
         {
             ShowTitle();
         }
+
+        // 시작 시 한 번 전체 HS 텍스트 동기화
+        RefreshHighTexts();
     }
 
     void Update()
     {
         if (GameManager.Instance == null) return;
 
-        // 점수 갱신 (모드별 UI 분리)
+        // === 디버그: 하이스코어 초기화 단축키 ===
+        if (Input.GetKeyDown(KeyCode.F12))
+            ResetHighScores();
+
+        // 점수 갱신 (모드별)
         int score = GameManager.Instance.GetScore();
         if (state == Flow.PlayingClassic && classicScoreText) classicScoreText.text = score.ToString();
         if (state == Flow.PlayingTimer && timerScoreText) timerScoreText.text = score.ToString();
 
-        // 하이스코어 표시 (플레이 중 상시 갱신)
-        if (highScoreUI)
-        {
-            int hs = GetCurrentHighScore();
-            highScoreUI.text = hs.ToString();
-        }
+        // 모드별 HS 텍스트 상시 갱신(활성된 쪽만 보임)
+        if (state == Flow.PlayingClassic || state == Flow.PlayingTimer)
+            RefreshHighTexts();
 
         // 타임어택 카운트다운
         if (state == Flow.PlayingTimer && !GameManager.Instance.IsGameOver)
@@ -183,6 +192,7 @@ public class GameUI : MonoBehaviour
         SetSpawnersEnabled(false);
         Time.timeScale = 1f;
         AudioManager.Instance?.EnsureBgmPlaying();
+        RefreshHighTexts();
     }
 
     void ShowChooseMode()
@@ -194,6 +204,8 @@ public class GameUI : MonoBehaviour
 
     void BeginGameplay(bool timerMode)
     {
+        currentIsTimer = timerMode;
+
         if (timerMode)
         {
             state = Flow.PlayingTimer;
@@ -210,25 +222,28 @@ public class GameUI : MonoBehaviour
 
         SetSpawnersEnabled(true);
         AudioManager.Instance?.EnsureBgmPlaying();
+        RefreshHighTexts();
     }
 
     void OpenPause()
     {
-        if (state != Flow.PlayingClassic) return;
+        if (state != Flow.PlayingClassic) return; // (타이머 모드에서도 쓰려면 이 체크 제거)
         state = Flow.Paused;
 
         ToggleGroups(title: false, choose: false, playing: true, classic: true, timer: false,
                      pause: true, settingTitle: false, over: false);
 
-        // 물리/드롭 입력 차단
         SetSpawnersEnabled(false);
         Time.timeScale = 0f;
+
+        // 패널 열릴 때 볼륨 슬라이더 최신값 반영
+        if (pauseBgmSlider) pauseBgmSlider.value = AudioManager.Instance ? AudioManager.Instance.GetBgmVolume() : pauseBgmSlider.value;
+        if (pauseSfxSlider) pauseSfxSlider.value = AudioManager.Instance ? AudioManager.Instance.GetSfxVolume() : pauseSfxSlider.value;
     }
 
     void ClosePause()
     {
-        // 원래 모드로 복귀
-        bool wasTimer = (timerGroup != null && timerGroup.activeSelf);
+        bool wasTimer = currentIsTimer;
         state = wasTimer ? Flow.PlayingTimer : Flow.PlayingClassic;
 
         ToggleGroups(title: false, choose: false, playing: true,
@@ -236,43 +251,45 @@ public class GameUI : MonoBehaviour
 
         SetSpawnersEnabled(true);
         Time.timeScale = 1f;
+        RefreshHighTexts();
     }
-
 
     void OpenGameOverUI(int finalScore)
     {
-        bool wasTimer = (timerGroup != null && timerGroup.activeSelf);
-        state = wasTimer ? Flow.PlayingTimer : Flow.PlayingClassic;
-
+        bool wasTimer = currentIsTimer;
         state = Flow.GameOver;
+
+        // 화면 토글 (HUD는 남겨둔 상태에서 Over만 On)
         ToggleGroups(title: false, choose: false, playing: true, classic: !wasTimer, timer: wasTimer, pause: false, settingTitle: false, over: true);
         SetSpawnersEnabled(false);
 
-        // 하이스코어 저장
-        SaveHighScore(finalScore);
-
+        // 하이스코어 저장 + 텍스트 갱신
+        SaveHighScore(finalScore, wasTimer);
         if (finalScoreText) finalScoreText.text = finalScore.ToString();
+        RefreshHighTexts();
     }
 
     void RestartScene()
     {
-        // 현재 모드 기록
-        bool wasTimer = (timerGroup != null && timerGroup.activeSelf);
-
-        // 씬 다시 로드
-        RestartHelper.ModeIsTimer = wasTimer;   //로드 후에도 모드 유지
+        bool wasTimer = currentIsTimer;
+        GameManager.Instance?.ResetTimescaleIfPaused();
+        RestartHelper.ModeIsTimer = wasTimer;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
     }
+
     void GoHomeScene()
     {
-        Time.timeScale = 1f;
+        GameManager.Instance?.ResetTimescaleIfPaused();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     void OpenTitleSetting()
     {
         ToggleGroups(title: true, choose: false, playing: false, classic: false, timer: false, pause: false, settingTitle: true, over: false);
+
+        // 패널 열릴 때 슬라이더 최신값 반영
+        if (titleBgmSlider) titleBgmSlider.value = AudioManager.Instance ? AudioManager.Instance.GetBgmVolume() : titleBgmSlider.value;
+        if (titleSfxSlider) titleSfxSlider.value = AudioManager.Instance ? AudioManager.Instance.GetSfxVolume() : titleSfxSlider.value;
     }
 
     void CloseTitleSetting()
@@ -301,27 +318,39 @@ public class GameUI : MonoBehaviour
     }
 
     // ======== High Score ========
-    int GetCurrentHighScore()
+    int GetHighScore(bool isTimer)
     {
-        bool isTimer = (state == Flow.PlayingTimer || (timerGroup && timerGroup.activeSelf && !gameOverGroup.activeSelf));
         string key = isTimer ? HS_TIMER : HS_CLASSIC;
         return PlayerPrefs.GetInt(key, 0);
     }
 
-    void SaveHighScore(int newScore)
+    void SaveHighScore(int newScore, bool isTimer)
     {
-        // 게임오버 시, 현재 어떤 모드였는지 화면에서 판단
-        bool wasTimer = timerGroup && !timerGroup.activeSelf == false && gameOverGroup && gameOverGroup.activeSelf;
-        // 위 라인이 상황에 따라 모호하면, state 기반으로도 처리:
-        if (state == Flow.GameOver)
-            wasTimer = timerGroup && timerGroup.activeSelf; // GameOver 직전의 활성 화면 기준
-
-        string key = wasTimer ? HS_TIMER : HS_CLASSIC;
+        string key = isTimer ? HS_TIMER : HS_CLASSIC;
         int prev = PlayerPrefs.GetInt(key, 0);
         if (newScore > prev)
         {
             PlayerPrefs.SetInt(key, newScore);
             PlayerPrefs.Save();
         }
+    }
+
+    void RefreshHighTexts()
+    {
+        // 현재 저장된 최고 기록을 각 UI에 반영
+        if (classicHighText)
+            classicHighText.text = GetHighScore(false).ToString();
+        if (timerHighText)
+            timerHighText.text = GetHighScore(true).ToString();
+    }
+
+    // ======== Debug: High Score Reset ========
+    void ResetHighScores()
+    {
+        PlayerPrefs.DeleteKey(HS_CLASSIC);
+        PlayerPrefs.DeleteKey(HS_TIMER);
+        PlayerPrefs.Save();
+        RefreshHighTexts();
+        Debug.Log(">>> High Scores cleared (Classic + Timer)");
     }
 }

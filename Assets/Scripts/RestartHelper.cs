@@ -1,3 +1,4 @@
+// Scripts/RestartHelper.cs
 using UnityEngine;
 
 public class RestartHelper
