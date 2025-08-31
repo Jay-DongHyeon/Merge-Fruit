@@ -1,6 +1,7 @@
 // Scripts/Spawner.cs
 using UnityEngine;
 using System.Collections;
+using UnityEngine.EventSystems; // ★ 추가
 
 public class Spawner : MonoBehaviour
 {
@@ -50,8 +51,37 @@ public class Spawner : MonoBehaviour
     // 미리보기용 SpriteRenderer (물리/충돌 X)
     private SpriteRenderer previewSR;
 
+    // ★ 일시정지/패널 오픈 직후, 손을 뗄 때까지 입력 억제
+    private bool suppressUntilRelease = false;
+
     // 외부에서 참조하고 싶으면 공개 프로퍼티로 노출
     public int NextIndex => nextGrade;
+
+    // ★ UI 위 포인터 여부
+    bool IsPointerOverUI()
+    {
+        if (EventSystem.current == null) return false;
+
+#if UNITY_EDITOR || UNITY_STANDALONE
+        if (EventSystem.current.IsPointerOverGameObject())
+            return true;
+#endif
+
+#if UNITY_ANDROID || UNITY_IOS
+        for (int i = 0; i < Input.touchCount; i++)
+        {
+            if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(i).fingerId))
+                return true;
+        }
+#endif
+        return false;
+    }
+
+    // ★ 외부(UI)에서 호출: 다음 포인터 릴리즈까지 입력 억제
+    public void SuppressNextPointerRelease()
+    {
+        suppressUntilRelease = true;
+    }
 
     void Start()
     {
@@ -70,9 +100,33 @@ public class Spawner : MonoBehaviour
 
     void Update()
     {
-        // ★ 게임오버면 입력/이동/드롭 모두 차단
-        if (GameManager.Instance != null && GameManager.Instance.IsGameOver) return;
+        // ★ 게임오버거나 타임스케일 0(일시정지)이면 완전 차단
+        if ((GameManager.Instance != null && GameManager.Instance.IsGameOver) || Time.timeScale == 0f) return;
         if (heldFruit == null) return;
+
+        // ★ UI 위 포인터면 입력 무시
+        if (IsPointerOverUI()) return;
+
+        // ★ 패널을 누른 그 포인터를 손에서 뗄 때까지 한 번 억제
+        if (suppressUntilRelease)
+        {
+#if UNITY_EDITOR || UNITY_STANDALONE
+            if (!Input.GetMouseButton(0)) suppressUntilRelease = false;
+            return;
+#else
+            bool anyTouching = false;
+            for (int i = 0; i < Input.touchCount; i++)
+            {
+                var phase = Input.GetTouch(i).phase;
+                if (phase != TouchPhase.Ended && phase != TouchPhase.Canceled)
+                {
+                    anyTouching = true; break;
+                }
+            }
+            if (!anyTouching) suppressUntilRelease = false;
+            return;
+#endif
+        }
 
         // 마우스/터치 X만 따라다니기
         Vector3 screen = Input.mousePosition;

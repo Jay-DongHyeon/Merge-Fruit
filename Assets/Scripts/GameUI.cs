@@ -32,7 +32,6 @@ public class GameUI : MonoBehaviour
     // ===== In-Game (HUD) =====
     [Header("Playing HUD")]
     [SerializeField] private Button pauseBTN;
-    // 모드별 하이스코어 텍스트(캔버스 구조에 맞춰 분리)
     [SerializeField] private TextMeshProUGUI classicHighText; // ClassicMode/High_Classic
     [SerializeField] private TextMeshProUGUI timerHighText;   // TimerMode/High_Timer
 
@@ -225,12 +224,23 @@ public class GameUI : MonoBehaviour
         RefreshHighTexts();
     }
 
+    // ★ 모든 스포너에 입력 억제 신호 보내기
+    void SuppressPointerOnAllSpawners()
+    {
+        if (spawners == null) return;
+        for (int i = 0; i < spawners.Length; i++)
+            if (spawners[i]) spawners[i].SuppressNextPointerRelease();
+    }
+
     void OpenPause()
     {
-        if (state != Flow.PlayingClassic) return; // (타이머 모드에서도 쓰려면 이 체크 제거)
+        if (state != Flow.PlayingClassic && state != Flow.PlayingTimer) return; // 양쪽 모드 지원
         state = Flow.Paused;
 
-        ToggleGroups(title: false, choose: false, playing: true, classic: true, timer: false,
+        // ★ 패널 열기 전에 먼저 억제 신호(같은 프레임 드롭 방지)
+        SuppressPointerOnAllSpawners();
+
+        ToggleGroups(title: false, choose: false, playing: true, classic: !currentIsTimer, timer: currentIsTimer,
                      pause: true, settingTitle: false, over: false);
 
         SetSpawnersEnabled(false);
@@ -246,6 +256,9 @@ public class GameUI : MonoBehaviour
         bool wasTimer = currentIsTimer;
         state = wasTimer ? Flow.PlayingTimer : Flow.PlayingClassic;
 
+        // ★ 재개 버튼 클릭도 잔여 입력 억제
+        SuppressPointerOnAllSpawners();
+
         ToggleGroups(title: false, choose: false, playing: true,
                      classic: !wasTimer, timer: wasTimer, pause: false, settingTitle: false, over: false);
 
@@ -258,6 +271,9 @@ public class GameUI : MonoBehaviour
     {
         bool wasTimer = currentIsTimer;
         state = Flow.GameOver;
+
+        // ★ 게임오버 패널 오픈 시에도 잔여 입력 억제
+        SuppressPointerOnAllSpawners();
 
         // 화면 토글 (HUD는 남겨둔 상태에서 Over만 On)
         ToggleGroups(title: false, choose: false, playing: true, classic: !wasTimer, timer: wasTimer, pause: false, settingTitle: false, over: true);
@@ -285,6 +301,9 @@ public class GameUI : MonoBehaviour
 
     void OpenTitleSetting()
     {
+        // ★ 타이틀 세팅 패널도 열자마자 억제(혹시 타이틀에서 드롭 입력 쓰는 구조 대비)
+        SuppressPointerOnAllSpawners();
+
         ToggleGroups(title: true, choose: false, playing: false, classic: false, timer: false, pause: false, settingTitle: true, over: false);
 
         // 패널 열릴 때 슬라이더 최신값 반영
