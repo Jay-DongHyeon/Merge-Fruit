@@ -3291,8 +3291,8 @@ MonoBehaviour:
   - {fileID: 9001198982692009566, guid: 556632a973e7db44a88cf1bc53b51603, type: 3}
   horizontalLimit: 3.5
   holdY: 5
-  dropCooldown: 0.6
-  spawnDelay: 0.6
+  dropCooldown: 0.9
+  spawnDelay: 0.9
   disableColliderWhileHold: 1
   fruitTag: Fruit
   debugLogs: 0
@@ -6854,7 +6854,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 360, y: 640}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.7
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
